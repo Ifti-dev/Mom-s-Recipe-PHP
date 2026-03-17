@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/single-recipe.css">
+    <script src="https://kit.fontawesome.com/bbf8f18e93.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <?php 
+            include("partials/header.php")
+        ?>
+    </header>
+    <div class="main-with-sidebar">
+        <main class="single-recipe-content-container">
+        
+            <section class="single-recipe-wrapper">
+            
+            </section>
+            <section class="comment-sec-container">
+                <div class="comment-sec-wrapper">
+                    <h2>Comments:</h2>
+                    <hr>
+                    <form id="comment-form" class="comment-form">
+                        <label for="comment-input-box-cont" class="comment-input-box-cont"><textarea name="comment-input-box" id="comment-input-box" placeholder="Add a comment"></textarea></label>
+                        <div class="comment-form-btn-container">
+                            <input type="reset" value="Cancle">
+                            <input type="submit" value="Comment">
+                        </div>
+                        
+                    </form>
+                    
+                    <div id="comment-container">
+                       <!-- comments are added here -->
+                    </div>
+                </div>
+
+            </section>
+        </main>
+        
+        <aside class="recipe-page-sidebar-container">
+                    <h2>Trending Recipes</h2>
+                    <div class="sidebar-trending-recipe">
+                        
+                    </div>
+
+                    <div class="sign-up-box">
+                        <h3>Wanna share your Recipe?</h3>
+                        <p>Join now</p>
+                        <a href="login.html">Sign up</a>
+                    </div>
+
+                    <h2>Recent Recipes</h2>
+                    <div class="sidebar-recent-recipe">
+                        
+                    </div>
+        </aside>
+    </div>
+    <footer>
+        <?php 
+            include("partials/footer.php")
+        ?>
+        <script src="js/header-footer.js"></script>
+        <script src="js/recipe-page.js"></script>
+    </footer>
+</body>
+</html>

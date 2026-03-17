@@ -1,0 +1,122 @@
+main{
+    align-items: center;
+    background-color: rgb(255, 255, 255);
+}
+.login-register-container{
+    margin-top: 100px;
+    margin-bottom: 100px;
+}
+.login-register-form-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px;
+    gap: 10px;
+    padding: 100px 30px 20px 30px;
+    border-radius: 10px;
+    background-color: #2e3137;
+    position: relative;
+}
+
+.login-register-form-user-img-cont{
+    position: absolute;
+    top: -75px;
+}
+.login-register-form-user-img-cont img{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.login-register-form{
+    width: 100%;
+    color: #616873;
+ 
+}
+.login-register-form-h2-cont{
+    /* color: #616873; */
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 0px 0px 20px 0px;
+    
+}
+.login-header , .register-header{
+    border-bottom: 3px solid white;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 7px;
+    transition: border-color 1s;
+    cursor: pointer;
+}
+.register-header{
+    border-color: #616873;
+}
+
+
+/* register and login input field(all) container a class to style all */
+.log-reg-user-inp{
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    margin-bottom: 30px;
+    
+}
+.log-reg-user-inp label{
+    font-size: 1.2rem;
+    
+}
+.log-reg-user-inp input{
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    border: none;
+    background-color: #636b7b;
+    color: white;
+}
+
+.log-reg-user-inp input::placeholder{
+    color: rgb(170, 170, 170);
+}
+
+
+/* register and login input field(all) container */
+.register-form-user-inp{
+    display: none;
+    overflow: hidden;
+}
+.login-form-user-inp{
+    overflow: hidden;
+}
+
+
+/* for single input fields including labels */
+.inp-single-cont{ 
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+
+.login-register-form-buttons input[type="submit"]{
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 1rem;
+    background-color: #4dc582;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.login-register-form-buttons{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+.login-register-form-buttons a{
+    color: #616873;
+    text-decoration: none;
+}
