@@ -1,3 +1,7 @@
+ <?php 
+ include("includes/database.php");
+ ?>
+
  <!DOCTYPE html>
  <html lang="en">
  <head>
@@ -32,43 +36,43 @@
                         
                     </div>
                 
-                    <form id="login-register-form-body">
+                    <form id="login-register-form-body" method="post">
                         <!-- for login -->
                         <div class="login-form-user-inp log-reg-user-inp">
                             <div class="username-container inp-single-cont">
                                 <label for="username-email-login">Username/Email:</label>
-                                <input type="text" placeholder="Username/Email" id="username-email-login">
+                                <input type="text" placeholder="Username/Email" id="username-email-login" name="username-email-login">
                             </div>
                             <div class="password-container inp-single-cont">
                                 <label for="password-login">Password:</label>
-                                <input type="password" placeholder="password" id="password-login">
+                                <input type="password" placeholder="password" id="password-login" name="password-login">
                             </div>
                         </div>
                         <!-- for register -->
                         <div class="register-form-user-inp log-reg-user-inp">
                             <div class="fullname-container inp-single-cont">
                                 <label for="user-fullname">Full Name:</label>
-                                <input type="text" placeholder="Fullname" id="user-fullname">
+                                <input type="text" placeholder="Fullname" id="user-fullname" name="user-fullname" >
                             </div>
                             <div class="email-container inp-single-cont">
                                 <label for="user-email">Email:</label>
-                                <input type="email" placeholder="Email" id="user-email">
+                                <input type="email" placeholder="Email" id="user-email" name="user-email" >
                             </div>
                             <div class="username-container inp-single-cont">
                                 <label for="username">Username:</label>
-                                <input type="text" placeholder="Username" id="username">
+                                <input type="text" placeholder="Username" id="username" name="username" >
                             </div>
                             <div class="password-container inp-single-cont">
                                 <label for="password">Password:</label>
-                                <input type="password" placeholder="xxxx" id="password">
+                                <input type="password" placeholder="xxxx" id="password" name="password" >
                             </div>
                             <div class="re-password-container inp-single-cont">
                                 <label for="re-password">Retype Password:</label>
-                                <input type="password" placeholder="xxxx" id="re-password">
+                                <input type="password" placeholder="xxxx" id="re-password" name="re-password" >
                             </div>
                         </div>
                         <div class="login-register-form-buttons">
-                            <input type="submit">
+                            <input type="submit" name="submit">
                             <a href="">Forgot Password</a>
                         </div>
                     </form>
@@ -78,7 +82,8 @@
     </main>
     <footer>
         <?php 
-            include("partials/footer.php")
+            include("partials/footer.php");
+            mysqli_close($conn);
         ?>
         <script src="js/login-register.js"></script>
         <script src="js/header-footer.js"></script>

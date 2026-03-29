@@ -1,3 +1,8 @@
+<?php 
+ include("includes/database.php");
+ ?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -164,7 +169,8 @@
     </main>
     <footer>
         <?php 
-            include("partials/footer.php")
+            include("partials/footer.php");
+            mysqli_close($conn);
         ?>
         <script src="js/recipe-form.js"></script>
         <script src="js/header-footer.js"></script>
