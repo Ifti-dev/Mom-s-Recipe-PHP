@@ -43,16 +43,13 @@ const login_register_user_repassword = document.querySelector("#re-password")
 const username_email_login =  document.querySelector("#username-email-login")
 const password_login = document.querySelector("#password-login")
 let user_login_data
-console.log("hhhh")
+
+
 login_register_form.addEventListener("submit",async(e)=>{
     e.preventDefault()
     //for already registered user eg. login
     if(user_action)
     {
-        //const user_exist = user_list.find((user)=>{return user.user_name == username_email_login.value || user.email == username_email_login.value})
-        //user_login_data = user_exist
-
-
         const reg_form_data = new FormData(login_register_form)
         const response = await fetch("api/login.php",{
             method: 'POST',
@@ -71,20 +68,6 @@ login_register_form.addEventListener("submit",async(e)=>{
             refresh_log_reg_form()
         }   
 
-        // if(user_exist){
-        //     if(user_exist.password == password_login.value)
-        //     {
-        //         console.log("worked")
-        //         localStorage.setItem("user_login_data", JSON.stringify(user_login_data))
-        //         window.location.href = "dashboard.html"
-        //     }
-        //     else{
-        //         alert("Password doesn't match")
-        //     }
-        // }
-        // else{
-        //     alert("User doesn't exists")
-        // }
     }
     //for new user eg. register
     else{
@@ -100,7 +83,6 @@ login_register_form.addEventListener("submit",async(e)=>{
         })
         const result = await response.json()
         
-        
         if(result.status == "error"){
             console.log(result.status)
             alert(result.message)
@@ -111,8 +93,6 @@ login_register_form.addEventListener("submit",async(e)=>{
             refresh_log_reg_form()
         }   
     }
-
-
 })
 
 const refresh_log_reg_form = ()=>{
