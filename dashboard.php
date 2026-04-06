@@ -1,5 +1,6 @@
 <?php 
  include("includes/database.php");
+ session_start()
  ?>
 
 
@@ -17,7 +18,7 @@
 <body>
     <header>
         <?php 
-            include("partials/header.php")
+            include("partials/header.php");
         ?>
     </header>
     <main class="main-with-sidebar">
@@ -45,36 +46,36 @@
             </section>
             <section class="container db-sec-container" id="recipe-creation-form">
                 <div class="wrapper-recipe-form">
-                    <form id="recipe-form">
+                    <form id="recipe-form" enctype="multipart/form-data" method="post">
                         <div class="recipe-form-cr">
                             <label>Title</label>
-                            <input type="text" placeholder="Enter recipe name...." class="recipe-inp-box" id="recipe-form-title" required>
+                            <input type="text" placeholder="Enter recipe name...." class="recipe-inp-box" id="recipe-form-title" name="recipe-form-title" required>
                         </div>
                         <div class="recipe-form-cr">
                             <label>Description</label>
-                            <textarea name="recipe-desc" class="recipe-inp-box" id="recipe-form-desc"></textarea>
+                            <textarea name="recipe-desc" class="recipe-inp-box" id="recipe-form-desc" name="recipe-form-desc" ></textarea>
                         </div>
                         <div class="recipe-form-cr recipe-form-img-file-cont">
                             <label for="upload image">Feature Image</label>
-                            <input type="file" accept=".jpg,.png" id="recipe-form-file" required>
+                            <input type="file" accept=".jpg,.png" id="recipe-form-file" name="recipe-form-file" required>
                             <!-- add img preview here using js cause if we directly use html and dont add src it will be an undefined img -->
                         </div>
                         <div class="recipe-form-cr">
                             <label for="cooking-time">Cooking Time</label>
                             <div class="cooking-time">
                                 <div class="cooking-time-hour">
-                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-hour">
+                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-hour" name="recipe-form-cook-hour" >
                                     <label for="cooking-time-hour">Hour</label>
                                 </div>
                                 <div class="cooking-time-min">
-                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-min">
+                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-min" name="recipe-form-cook-min">
                                     <label for="cooking-time-min">mins</label>
                                 </div>
                             </div>
                         </div>
                         <div class="recipe-form-cr">
                             <label for="total-serving">Total serving</label>
-                            <input type="number" value="1" class="recipe-inp-box" id="recipe-form-serving">
+                            <input type="number" value="1" class="recipe-inp-box" id="recipe-form-serving" name="recipe-form-serving">
                         </div>
                         <div class="recipe-form-cr">
                             <label for="ingredients">Ingredients</label>
@@ -88,7 +89,7 @@
                         </div>
                         <div class="recipe-form-footer">
                             <input type="button" id="cancle-recipe-form" value="cancle">
-                            <input type="submit" id="add-recipe" value="Add Recipe">
+                            <input type="submit" id="add-recipe" value="Add Recipe" name="submit">
                         </div>
                     </form>
                 </div>
@@ -165,13 +166,32 @@
             </section>
         
         </section>
-
+        <div class="test">
+            <form method="post">
+                <input type="text" name="test_text">
+                <input type="submit" name="sub">
+            </form>
+            
+        </div>
     </main>
     <footer>
         <?php 
+            
+            if(!empty($_POST["sub"])){
+                echo $_POST["test_text"] . "<br>";
+                echo preg_replace('/[\s-]+/','-',$_POST["test_text"]) . "<br>";
+                echo preg_replace('/[\s-]/','-',$_POST["test_text"]);
+                //[] = character set
+                //replace everything with these set
+                //\s = gaps between characters
+                //- = hifen between characters
+                //+ = it means where it has multiple set take that as one
+
+            }
             include("partials/footer.php");
             mysqli_close($conn);
         ?>
+        <script src="js/dashboard.js"></script>
         <script src="js/recipe-form.js"></script>
         <script src="js/header-footer.js"></script>
     </footer>
