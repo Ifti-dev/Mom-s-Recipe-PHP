@@ -5,61 +5,6 @@ logout_btn.addEventListener("click",()=>{
 })
 
 
-const add_ingredient_btn = document.querySelector("#add-ingredient-btn")
-const add_instruction_btn = document.querySelector("#add-instruction-btn")
-const add_ingredient_list = document.querySelector(".ingredient-list")
-const add_instruction_list = document.querySelector(".instruction-list")
-
-
-const create_new_li = (ul_container,li_type,li_inp_value)=>{
-    const new_li = document.createElement("li")
-
-    const new_li_input = document.createElement("input")
-    new_li_input.name = li_type + "[]"
-    new_li_input.type = "text"
-
-    const new_li_delete = document.createElement("input")
-    new_li_delete.type = "button"
-    new_li_delete.value = "X"
-
-    if(li_inp_value){
-        new_li_input.value = li_inp_value
-    }
-
-    new_li.appendChild(new_li_input)
-    new_li.appendChild(new_li_delete)
-
-    ul_container.appendChild(new_li)
-}
-
-const delete_li = (e)=>{
-    if(e.target.type == "button"){
-        e.target.parentElement.remove()
-    }
-}
-
-
-add_instruction_btn.addEventListener("click",()=>{
-    create_new_li(add_instruction_list, "instruction")
-})
-add_ingredient_btn.addEventListener("click",()=>{
-    create_new_li(add_ingredient_list, "ingredient")
-})
-
-add_ingredient_list.addEventListener("click",(e)=>{delete_li(e)})
-add_instruction_list.addEventListener("click",(e)=>{delete_li(e)})
-
-const get_li_inp_text_value = (ul_container)=>{
-    const ul_list = ul_container.querySelectorAll("li")
-    return Array.from(ul_list).map((e)=>{
-        let list = e.querySelector("input")
-        if(list.type == "text")
-        {   
-            return list.value
-        }
-    })
-}
-
 
 //Form open and Form submission and json store
 

@@ -53,7 +53,7 @@
                         </div>
                         <div class="recipe-form-cr">
                             <label>Description</label>
-                            <textarea name="recipe-desc" class="recipe-inp-box" id="recipe-form-desc" name="recipe-form-desc" ></textarea>
+                            <textarea class="recipe-inp-box" id="recipe-form-desc" name="recipe-form-desc" required></textarea>
                         </div>
                         <div class="recipe-form-cr recipe-form-img-file-cont">
                             <label for="upload image">Feature Image</label>
@@ -64,18 +64,18 @@
                             <label for="cooking-time">Cooking Time</label>
                             <div class="cooking-time">
                                 <div class="cooking-time-hour">
-                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-hour" name="recipe-form-cook-hour" >
+                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-hour" name="recipe-form-cook-hour" required>
                                     <label for="cooking-time-hour">Hour</label>
                                 </div>
                                 <div class="cooking-time-min">
-                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-min" name="recipe-form-cook-min">
+                                    <input type="number" value="00" class="recipe-inp-box" id="recipe-form-cook-min" name="recipe-form-cook-min" required>
                                     <label for="cooking-time-min">mins</label>
                                 </div>
                             </div>
                         </div>
                         <div class="recipe-form-cr">
                             <label for="total-serving">Total serving</label>
-                            <input type="number" value="1" class="recipe-inp-box" id="recipe-form-serving" name="recipe-form-serving">
+                            <input type="number" value="1" class="recipe-inp-box" id="recipe-form-serving" name="recipe-form-serving" required>
                         </div>
                         <div class="recipe-form-cr">
                             <label for="ingredients">Ingredients</label>
@@ -166,28 +166,10 @@
             </section>
         
         </section>
-        <div class="test">
-            <form method="post">
-                <input type="text" name="test_text">
-                <input type="submit" name="sub">
-            </form>
-            
-        </div>
+
     </main>
     <footer>
         <?php 
-            
-            if(!empty($_POST["sub"])){
-                echo $_POST["test_text"] . "<br>";
-                echo preg_replace('/[\s-]+/','-',$_POST["test_text"]) . "<br>";
-                echo preg_replace('/[\s-]/','-',$_POST["test_text"]);
-                //[] = character set
-                //replace everything with these set
-                //\s = gaps between characters
-                //- = hifen between characters
-                //+ = it means where it has multiple set take that as one
-
-            }
             include("partials/footer.php");
             mysqli_close($conn);
         ?>

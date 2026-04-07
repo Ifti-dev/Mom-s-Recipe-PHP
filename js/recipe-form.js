@@ -5,11 +5,7 @@
 
 const recipe_form = document.querySelector("#recipe-form")
 const recipe_form_file = document.querySelector("#recipe-form-file")
-// const recipe_form_title = document.getElementById("recipe-form-title")
-// const recipe_form_desc = document.getElementById("recipe-form-desc")
-// const recipe_form_cook_hour = document.getElementById("recipe-form-cook-hour")
-// const recipe_form_cook_min = document.getElementById("recipe-form-cook-min")
-// const recipe_form_total_serving = document.getElementById("recipe-form-serving")
+
 
 let edit_recipe_card_db_element
 // let upload_recipe_img_db_src
@@ -36,14 +32,7 @@ let edit_recipe_card_db_element
 // }
 
 
-// recipe_form_file.addEventListener("change",()=>{
-//     const file_reader = new FileReader()
-//     file_reader.readAsDataURL(recipe_form_file.files[0])
-//     file_reader.onload = ()=>{
-//         upload_recipe_img_db_src = file_reader.result
-//         preview_recipe_img_db()
-//     }
-// })
+
 
 // let get_user_login_data = JSON.parse(localStorage.getItem("user_login_data"))
 
@@ -55,12 +44,63 @@ let edit_recipe_card_db_element
 //     return i
 // }
 
-// const slug_creator = (title)=>{
-//     console.log(typeof(title))
-//     console.log(title.replaceAll(" ","-"))
-//     return title.toLowerCase().replaceAll(" ","-")
+//Ingredient and isnstruction create and delete
+const add_ingredient_btn = document.querySelector("#add-ingredient-btn")
+const add_instruction_btn = document.querySelector("#add-instruction-btn")
+const add_ingredient_list = document.querySelector(".ingredient-list")
+const add_instruction_list = document.querySelector(".instruction-list")
+
+
+const create_new_li = (ul_container,li_type,li_inp_value)=>{
+    const new_li = document.createElement("li")
+
+    const new_li_input = document.createElement("input")
+    new_li_input.name = li_type + "[]"
+    new_li_input.type = "text"
+
+    const new_li_delete = document.createElement("input")
+    new_li_delete.type = "button"
+    new_li_delete.value = "X"
+
+    if(li_inp_value){
+        new_li_input.value = li_inp_value
+    }
+
+    new_li.appendChild(new_li_input)
+    new_li.appendChild(new_li_delete)
+
+    ul_container.appendChild(new_li)
+}
+
+const delete_li = (e)=>{
+    if(e.target.type == "button"){
+        e.target.parentElement.remove()
+    }
+}
+
+
+add_instruction_btn.addEventListener("click",()=>{
+    create_new_li(add_instruction_list, "instruction")
+})
+add_ingredient_btn.addEventListener("click",()=>{
+    create_new_li(add_ingredient_list, "ingredient")
+})
+
+add_ingredient_list.addEventListener("click",(e)=>{delete_li(e)})
+add_instruction_list.addEventListener("click",(e)=>{delete_li(e)})
+
+// const get_li_inp_text_value = (ul_container)=>{
+//     const ul_list = ul_container.querySelectorAll("li")
+//     return Array.from(ul_list).map((e)=>{
+//         let list = e.querySelector("input")
+//         if(list.type == "text")
+//         {   
+//             return list.value
+//         }
+//     })
 // }
 
+//Form submission
 recipe_form.addEventListener("submit",async(e)=>{
     e.preventDefault()
     
