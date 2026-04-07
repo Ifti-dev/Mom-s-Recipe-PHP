@@ -24,29 +24,34 @@
                 $counter++;
             }
         }
-       
     }
+    
     function upload_img(){
         if(!empty($_FILES["recipe-form-file"])){
             $target_dir = "../assets/user-uploads/";
             
-            $file_name = time() . "_" . basename($_FILES["recipe-form-file"]["name"]);
+            $file_name = time() . "_" . basename($_FILES["recipe-form-file"]["name"]); //updating file name
             $target_file_loc = $target_dir . $file_name;
 
             if(move_uploaded_file($_FILES["recipe-form-file"]["tmp_name"], $target_file_loc)){
-                return $target_file_loc;
+                return $file_name;
             }
         }   
-
     }
 
     function ing_ins_list($conn,$list_table,$list_type, $recipe_id){
-        $list = $_POST["$list_type"];
-        foreach($list as $list_data){
-            $query = "INSERT INTO $list_table(recipe_id, `$list_type`) VALUES('$recipe_id','$list_data')";
-            mysqli_query($conn, $query);
+        if(!empty($_POST["$list_type"])){
+            $list = $_POST["$list_type"];
+            foreach($list as $list_data){
+                $query = "INSERT INTO $list_table(recipe_id, `$list_type`) VALUES('$recipe_id','$list_data')";
+                mysqli_query($conn, $query);
+            }
+            return "success";
         }
-        return "success";
+        else{
+            return "does not exist";
+        }
+        
     }
 
     if($_SERVER["REQUEST_METHOD"] == "POST"){
