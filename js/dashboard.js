@@ -32,34 +32,14 @@ cancle_recipe_form.addEventListener("click",()=>{
 
 // //Recipe card creation on dashboard 
 
-// const recipe_list_dashboard = document.querySelector(".recipe-list-body")
+const recipe_list_dashboard = document.querySelector(".recipe-list-body")
 
-// const create_recipe_card_db = (title,img_src,recipe_id,recipe_unique_id,slug)=>{
-//     let new_recipe = `
-//                     <div class="recipe-dashboard-card" data-unique_id ="${recipe_unique_id}">
-//                         <div class="recipe-dashboard-card-img">
-//                             <img src="${img_src}" alt="">
-//                         </div>
-//                         <div class="recipe-dashboard-card-body">
-//                             <div class="recipe-dashboard-card-info">
-//                                 <h3><a href="recipe-page.html?slug=${slug}">${title}</a></h3>
-//                                 <p>Recipe Id: <span>${recipe_id}</span></p>
-//                             </div>
-                            
-//                             <div class="recipe-dashboard-card-buttons">
-                                
-//                                 <button class="recipe-dashboard-card-edit-btn"><i class="fa-solid fa-trash"></i> Edit</button>
-//                                 <button class="recipe-dashboard-card-del-btn"><i class="fa-solid fa-pen"></i> Delete</button>
-                                
-//                             </div>
-                           
-//                         </div>
-                        
-//                     </div>
-//     `
-//     recipe_list_dashboard.innerHTML += new_recipe
-// }
-
+const create_recipe_card_db = async()=>{
+    const response = await fetch("api/create_recipe_cards.php");
+    const result = await response.text()
+    recipe_list_dashboard.innerHTML = result
+}
+create_recipe_card_db()
 // let current_user_recipe_list
 // const check_recipe_list_to_create_card_db = ()=>{
 //     recipe_list_dashboard.innerHTML = ``
@@ -299,3 +279,20 @@ dashboard_sidebar_options_container.addEventListener("click",(e)=>{
 //         e.target.closest(".recipe-dashboard-card").remove()
 //     }
 // })
+
+
+//for refreshing the form after submit and edit a recipe
+const recipe_form_refresh = ()=>{
+    recipe_form_file.value=""
+    recipe_form_title.value=""
+    recipe_form_desc.value=""
+    recipe_form_cook_hour.value=""
+    recipe_form_cook_min.value=""
+    recipe_form_total_serving.value=""
+    add_ingredient_list.innerHTML=""
+    add_instruction_list.innerHTML=""
+    if(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+        recipe_form_img_file_cont.removeChild(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+    edit_recipe_card_db_element = ""
+    upload_recipe_img_db_src = ""
+}

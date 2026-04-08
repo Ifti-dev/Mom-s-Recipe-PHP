@@ -115,6 +115,9 @@ recipe_form.addEventListener("submit",async(e)=>{
         })
         const result = await response.json()
         console.log(result.status)
+        if(result.status == "success"){
+            create_recipe_card_db()
+        }
         
     }
     //For edit recipe
@@ -145,19 +148,3 @@ recipe_form.addEventListener("submit",async(e)=>{
     //refreshing the form after submission
   
 })
-
-//for refreshing the form after submit and edit a recipe
-// const recipe_form_refresh = ()=>{
-//     recipe_form_file.value=""
-//     recipe_form_title.value=""
-//     recipe_form_desc.value=""
-//     recipe_form_cook_hour.value=""
-//     recipe_form_cook_min.value=""
-//     recipe_form_total_serving.value=""
-//     add_ingredient_list.innerHTML=""
-//     add_instruction_list.innerHTML=""
-//     if(recipe_form_img_file_cont.getElementsByTagName("img")[0])
-//         recipe_form_img_file_cont.removeChild(recipe_form_img_file_cont.getElementsByTagName("img")[0])
-//     edit_recipe_card_db_element = ""
-//     upload_recipe_img_db_src = ""
-// }
