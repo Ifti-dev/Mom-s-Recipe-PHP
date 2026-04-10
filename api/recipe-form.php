@@ -37,6 +37,9 @@
                 return $file_name;
             }
         }   
+        else{
+            return "does not exist";
+        }
     }
 
     function ing_ins_list($conn,$list_table,$list_type, $recipe_id){
@@ -58,6 +61,7 @@
         //NOTES: 1) you can not add files inside $_POST so use $server req method. 2)Always check if the html code has multiple names, 
         //3)To check error go to networks tab and click on the current php file => response 
         //4)check table data types and limits
+
         $user_id = $_SESSION["user_id"];
         $username = $_SESSION["username"];
         $title = $_POST["recipe-form-title"];
@@ -67,16 +71,33 @@
         $cook_hour = $_POST["recipe-form-cook-hour"];
         $cook_min = $_POST["recipe-form-cook-min"];
         $total_serving = $_POST["recipe-form-serving"];
+        $recipe_id = $_POST["recipe_id"];
+        $query = null;
 
-        $query = "INSERT INTO recipe_list(user_id, username, slug, title, img_link, description, cook_hour, cook_min, total_serving) 
+        if(empty($recipe_id)){
+            $query = "INSERT INTO recipe_list(user_id, username, slug, title, img_link, description, cook_hour, cook_min, total_serving) 
             VALUES('$user_id','$username','$slug','$title','$img_link','$description','$cook_hour','$cook_min','$total_serving')";
+        }
+        else{
+            if(!empty($_FILES["recipe-form-file"]))
+                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', slug = '$slug', title = '$title', img_link = '$img_link', description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving'";
+            else{
+                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', slug = '$slug', title = '$title', , description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving'";
+                
+            }
+        }
+        
         
 
         //It consists
         //1) Img upload ...2) Data upload ...\3) list upload ...
-        if($img_link && mysqli_query($conn, $query)){
+        if(mysqli_query($conn, $query)){
             //mysqli_insert_id — Returns the value generated for an AUTO_INCREMENT column by the last query
-            $recipe_id_updated = mysqli_insert_id($conn);
+            if(empty($recipe_id))
+                $recipe_id_updated = mysqli_insert_id($conn);
+            else
+                $recipe_id_updated = $recipe_id;
+            
             
             $ing_upload = ing_ins_list($conn,"ingredient_list","ingredient",$recipe_id_updated);
             $inst_upload = ing_ins_list($conn,"instruction_list","instruction",$recipe_id_updated);
@@ -88,7 +109,7 @@
             }
         }
         else{
-            echo json_encode(["status" => "failed"]);
+            echo json_encode(["status" => "$recipe_id"]);
         }
 
     }

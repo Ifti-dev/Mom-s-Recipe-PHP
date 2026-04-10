@@ -66,29 +66,50 @@ create_recipe_card_db()
 
 
 
-// //Recipe card deletion and edit on dashboard
-// const delete_btn_recipe_card_db = document.querySelector(".recipe-dashboard-card-del-btn")
-// const edit_btn_recipe_card_db = document.querySelector(".recipe-dashboard-card-edit-btn")
+//Recipe card deletion and edit on dashboard
+const delete_btn_recipe_card_db = document.querySelector(".recipe-dashboard-card-del-btn")
+const edit_btn_recipe_card_db = document.querySelector(".recipe-dashboard-card-edit-btn")
+let get_recipe_data = null
 
-// recipe_list_dashboard.addEventListener("click",(e)=>{
-//     let find_recipe_db = recipe_list.findIndex((recipe)=>recipe.recipe_unique_id==e.target.closest(".recipe-dashboard-card").dataset.unique_id)
-//     let find_recipe_db_element = recipe_list[find_recipe_db]
-//     if(e.target.className == "recipe-dashboard-card-edit-btn"){
-//         // To make form visible
-//         recipe_creation_form.classList.add("db-sec-active")
-//         document.body.classList.add("db-body-blur")
-        
-//         edit_recipe_card_db(find_recipe_db_element)
-//     }
-//     if(e.target.className == "recipe-dashboard-card-del-btn"){
-//         // console.log(e.target.closest(".recipe-dashboard-card").dataset.unique_id)
-        
-//         recipe_list.splice(find_recipe_db,1)
-//         localStorage.setItem("recipe_list",JSON.stringify(recipe_list))
 
-//         e.target.closest(".recipe-dashboard-card").remove()
-//     }
-// })
+recipe_list_dashboard.addEventListener("click",async(e)=>{
+    let recipe_id = e.target.closest(".recipe-dashboard-card").dataset.unique_id
+    // let find_recipe_db_element = recipe_list[find_recipe_db]
+
+    // const response = await fetch("api/get_recipe_data.php",{
+    //     method: 'POST',
+    //     headers: {'Content-Type': 'application/json'},
+    //     body:JSON.stringify(recipe_id)
+    // })
+    // const result = await response.json()
+    // get_recipe_data = {
+    //             title : result.title,
+    //             desc : result.description,
+    //             img : result.img_link,
+    //             cook_hour : result.cook_hour,
+    //             cook_min : result.cook_min,
+    //             total_serving : result.total_serving,
+    //             ingredient_list : result.ingredient_list,
+    //             instruction_list : result.instruction_list,
+    //             recipe_id: recipe_id
+    // }
+
+    if(e.target.className == "recipe-dashboard-card-edit-btn"){
+        // To make form visible
+        recipe_creation_form.classList.add("db-sec-active")
+        document.body.classList.add("db-body-blur")
+        console.log(recipe_id)
+        load_data_to_recipe_form(recipe_id)
+    }
+    // if(e.target.className == "recipe-dashboard-card-del-btn"){
+    //     // console.log(e.target.closest(".recipe-dashboard-card").dataset.unique_id)
+        
+    //     recipe_list.splice(find_recipe_db,1)
+    //     localStorage.setItem("recipe_list",JSON.stringify(recipe_list))
+
+    //     e.target.closest(".recipe-dashboard-card").remove()
+    // }
+})
 // // title,desc,img,cook_hour,cook_min,ingredient_list_data,instruction_list_data,recipe_id,unique_id
 // const edit_recipe_card_db = (element)=>{
 //     //here we are refreshing the form else previous list item will aso show in form
@@ -282,17 +303,17 @@ dashboard_sidebar_options_container.addEventListener("click",(e)=>{
 
 
 //for refreshing the form after submit and edit a recipe
-const recipe_form_refresh = ()=>{
-    recipe_form_file.value=""
-    recipe_form_title.value=""
-    recipe_form_desc.value=""
-    recipe_form_cook_hour.value=""
-    recipe_form_cook_min.value=""
-    recipe_form_total_serving.value=""
-    add_ingredient_list.innerHTML=""
-    add_instruction_list.innerHTML=""
-    if(recipe_form_img_file_cont.getElementsByTagName("img")[0])
-        recipe_form_img_file_cont.removeChild(recipe_form_img_file_cont.getElementsByTagName("img")[0])
-    edit_recipe_card_db_element = ""
-    upload_recipe_img_db_src = ""
-}
+// const recipe_form_refresh = ()=>{
+//     recipe_form_file.value=""
+//     recipe_form_title.value=""
+//     recipe_form_desc.value=""
+//     recipe_form_cook_hour.value=""
+//     recipe_form_cook_min.value=""
+//     recipe_form_total_serving.value=""
+//     add_ingredient_list.innerHTML=""
+//     add_instruction_list.innerHTML=""
+//     if(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+//         recipe_form_img_file_cont.removeChild(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+//     edit_recipe_card_db_element = ""
+//     upload_recipe_img_db_src = ""
+// }

@@ -57,7 +57,7 @@
                         </div>
                         <div class="recipe-form-cr recipe-form-img-file-cont">
                             <label for="upload image">Feature Image</label>
-                            <input type="file" accept=".jpg,.png" id="recipe-form-file" name="recipe-form-file" required>
+                            <input type="file" accept=".jpg,.png" id="recipe-form-file" name="recipe-form-file">
                             <!-- add img preview here using js cause if we directly use html and dont add src it will be an undefined img -->
                         </div>
                         <div class="recipe-form-cr">
@@ -88,7 +88,8 @@
                             <input type="button" value="+New instruction" id="add-instruction-btn">
                         </div>
                         <div class="recipe-form-footer">
-                            <input type="button" id="cancle-recipe-form" value="cancle">
+                            <input type="hidden" name="recipe_id" id="recipe_id">
+                            <input type="reset" id="cancle-recipe-form" value="cancle">
                             <input type="submit" id="add-recipe" value="Add Recipe" name="submit">
                         </div>
                     </form>
@@ -173,8 +174,9 @@
             include("partials/footer.php");
             mysqli_close($conn);
         ?>
-        <script src="js/dashboard.js"></script>
         <script src="js/recipe-form.js"></script>
+        <script src="js/dashboard.js"></script>
+        
         <script src="js/header-footer.js"></script>
     </footer>
  

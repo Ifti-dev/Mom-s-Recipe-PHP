@@ -4,32 +4,32 @@
 // //and if there is recipe avialable than the srtingified recipe_list is taken from the local storage and converted to its original array version
 
 const recipe_form = document.querySelector("#recipe-form")
-const recipe_form_file = document.querySelector("#recipe-form-file")
+const root_url = "http://localhost/Mom-s-Recipe-PHP/"
 
 
-let edit_recipe_card_db_element
-// let upload_recipe_img_db_src
+let edit_recipe_switch
+let upload_recipe_img_db_src
 
-// const recipe_form_img_file_cont = document.querySelector(".recipe-form-img-file-cont")
+const recipe_form_img_file_cont = document.querySelector(".recipe-form-img-file-cont")
 
-// const preview_recipe_img_db = ()=>{
+const preview_recipe_img_db = (img)=>{
     
-//     let recipe_db_preview_img = recipe_form_img_file_cont.getElementsByTagName("img")
-//     //it returns an array if exist
+    let recipe_db_preview_img = recipe_form_img_file_cont.getElementsByTagName("img")
+    //it returns an array if exist
     
-//     if(recipe_db_preview_img.length <=0 ){
-//         console.log("worked")
-//         let new_recipe_img_db = document.createElement("img")
-//         new_recipe_img_db.src = upload_recipe_img_db_src
-//         recipe_form_img_file_cont.appendChild(new_recipe_img_db)
-//     }
-//     else{
-//         // console.log(upload_recipe_img_db_src)
-//         // console.log(recipe_db_preview_img[0].src)
-//         recipe_db_preview_img[0].src = upload_recipe_img_db_src
-//     }
+    if(recipe_db_preview_img.length <=0 ){
+        console.log("worked")
+        let new_recipe_img_db = document.createElement("img")
+        new_recipe_img_db.src = img
+        recipe_form_img_file_cont.appendChild(new_recipe_img_db)
+    }
+    else{
+        // console.log(upload_recipe_img_db_src)
+        // console.log(recipe_db_preview_img[0].src)
+        recipe_db_preview_img[0].src = img
+    }
 
-// }
+}
 
 
 
@@ -100,14 +100,33 @@ add_instruction_list.addEventListener("click",(e)=>{delete_li(e)})
 //     })
 // }
 
+
+
+const recipe_form_file = document.querySelector("#recipe-form-file")
+const recipe_form_title = document.getElementById("recipe-form-title")
+const recipe_form_desc = document.getElementById("recipe-form-desc")
+const recipe_form_cook_hour = document.getElementById("recipe-form-cook-hour")
+const recipe_form_cook_min = document.getElementById("recipe-form-cook-min")
+const recipe_form_total_serving = document.getElementById("recipe-form-serving")
+const recipe_form_recipe_id = document.querySelector("#recipe_id")//only for edit else null
+
 //Form submission
+recipe_form_file.addEventListener("change",()=>{
+    const img = recipe_form_file.files[0]
+    if(img){
+        preview_recipe_img_db(URL.createObjectURL(img))
+    }
+    
+})
+
+
 recipe_form.addEventListener("submit",async(e)=>{
     e.preventDefault()
     
     const recipe_form_data = new FormData(recipe_form)
     //For new recipe
-    if(!edit_recipe_card_db_element){
-        // recipe_form_file.required = true
+    if(!edit_recipe_switch){
+        recipe_form_file.required = true
         
         const response = await fetch("api/recipe-form.php",{
             method:"POST",
@@ -116,35 +135,65 @@ recipe_form.addEventListener("submit",async(e)=>{
         const result = await response.json()
         console.log(result.status)
         if(result.status == "success"){
-            create_recipe_card_db()
+            console.log(result.status)
+            // create_recipe_card_db()
+            recipe_form_refresh()
         }
         
     }
     //For edit recipe
-    // else{
-    //         console.log(edit_recipe_card_db_element)
-    //         let find_recipe_db = recipe_list.find((recipe)=>recipe.recipe_unique_id==edit_recipe_card_db_element)
-            
-    //         find_recipe_db.title = recipe_form_title.value,
-    //         find_recipe_db.img = upload_recipe_img_db_src
-    //         find_recipe_db.desc = recipe_form_desc.value,
-    //         find_recipe_db.cook_hour = recipe_form_cook_hour.value,
-    //         find_recipe_db.cook_min = recipe_form_cook_min.value,
-    //         find_recipe_db.total_serving = recipe_form_total_serving.value,
-    //         find_recipe_db.ingredient_list_data = get_li_inp_text_value(add_ingredient_list),
-    //         find_recipe_db.instruction_list_data = get_li_inp_text_value(add_instruction_list),
-    //         // find_recipe_db.recipe_id = recipe_list.length,
-    //         find_recipe_db.recipe_unique_id = edit_recipe_card_db_element
-    // }
-    //console.log(edit_recipe_card_db_element)
-    //console.log(recipe_list)
-    //localStorage.setItem("recipe_list",JSON.stringify(recipe_list)) //storing recipe list in local storage in json string format 
-    //it gets stored as stringified version of recipe_list = [] at first and then...
-    
-    //check_recipe_list_to_create_card_db()
-    //To update recipe container in real time. Dont worry the func will not create cards multiple times as we are repfreshing it each time it is called = ``
-    
-    //recipe_form_refresh()
-    //refreshing the form after submission
+    else{
+        const response = await fetch("api/recipe-form.php",{
+        method: 'POST',
+        body: recipe_form_data
+        })
+        const result = await response.json()
+        console.log(result.status)
+    }
   
 })
+
+//Load data to recipe form for editing
+let load_data_to_recipe_form = async(recipe_id)=>{
+    edit_recipe_switch = true
+    //get data
+    const response = await fetch("api/get_recipe_data.php",{
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body:JSON.stringify(recipe_id)
+    })
+    const result = await response.json()
+
+    //load data
+    recipe_form_recipe_id.value =  recipe_id
+    recipe_form_title.value = result.title
+    recipe_form_desc.value = result.description
+    preview_recipe_img_db(root_url+"assets/user-uploads/"+result.img_link)
+    recipe_form_cook_hour.value = result.cook_hour
+    recipe_form_cook_min.value = result.cook_min 
+    result.ingredient_list.forEach((value)=>{
+        create_new_li(add_ingredient_list,"ingredient",value)
+        
+    })
+    result.instruction_list.forEach((value)=>{
+        create_new_li(add_instruction_list,"instruction",value)
+    })
+}
+
+
+
+//for refreshing the form after submit and edit a recipe
+// recipe_form.addEventListener("reset",()=>{
+//     recipe_form_refresh()
+// })
+
+const recipe_form_refresh = ()=>{
+    console.log("cleared")
+    recipe_form.reset()
+    add_ingredient_list.innerHTML=""
+    add_instruction_list.innerHTML=""
+    if(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+        recipe_form_img_file_cont.removeChild(recipe_form_img_file_cont.getElementsByTagName("img")[0])
+    edit_recipe_card_db_element = ""
+    upload_recipe_img_db_src = ""
+}
