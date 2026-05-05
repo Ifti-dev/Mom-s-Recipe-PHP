@@ -42,11 +42,18 @@
         }
     }
 
-    function ing_ins_list($conn,$list_table,$list_type, $recipe_id){
+    function ing_ins_list($conn,$list_table,$list_type, $list_hidden, $recipe_id){
         if(!empty($_POST["$list_type"])){
             $list = $_POST["$list_type"];
-            foreach($list as $list_data){
-                $query = "INSERT INTO $list_table(recipe_id, `$list_type`) VALUES('$recipe_id','$list_data')";
+            $list_id = $_POST["$list_hidden"];
+            foreach($list as $li => $list_data){
+                if(empty($list_id[$li])){
+                    $query = "INSERT INTO $list_table(recipe_id, '$list_type') VALUES('$recipe_id','$list_data')";    
+                }
+                else{
+                    $query = "UPDATE $list_table SET $list_type = '$list_data' WHERE id = $list_id[$li]";
+                }
+                
                 mysqli_query($conn, $query);
             }
             return "success";
@@ -80,9 +87,9 @@
         }
         else{
             if(!empty($_FILES["recipe-form-file"]))
-                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', slug = '$slug', title = '$title', img_link = '$img_link', description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving'";
+                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', title = '$title', img_link = '$img_link', description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving' WHERE id = $recipe_id";
             else{
-                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', slug = '$slug', title = '$title', , description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving'";
+                $query = "UPDATE recipe_list SET user_id = '$user_id', username = '$username', title = '$title', , description = '$description', cook_hour = '$cook_hour', cook_min = '$cook_min', total_serving = '$total_serving' WHERE id = $recipe_id";
                 
             }
         }
@@ -99,8 +106,8 @@
                 $recipe_id_updated = $recipe_id;
             
             
-            $ing_upload = ing_ins_list($conn,"ingredient_list","ingredient",$recipe_id_updated);
-            $inst_upload = ing_ins_list($conn,"instruction_list","instruction",$recipe_id_updated);
+            $ing_upload = ing_ins_list($conn,"ingredient_list","ingredient","ingredient_id",$recipe_id_updated);
+            $inst_upload = ing_ins_list($conn,"instruction_list","instruction","instruction_id",$recipe_id_updated);
             
             if($ing_upload && $inst_upload)
                 echo json_encode(["status" => "success"]);

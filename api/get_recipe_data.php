@@ -12,8 +12,13 @@
         $list_data = [];
         if(mysqli_num_rows($response) != 0){
             while($row = mysqli_fetch_assoc($response)){
-                array_push($list_data,$row["$col_name"]);
-            }
+                array_push($list_data,
+                    [
+                        "id" => $row["id"],
+                        "value" => $row["$col_name"],
+                    ]);
+                    
+                }
         }
         return $list_data;
     }

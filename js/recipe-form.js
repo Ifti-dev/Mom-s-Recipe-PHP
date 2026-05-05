@@ -50,9 +50,13 @@ const add_instruction_btn = document.querySelector("#add-instruction-btn")
 const add_ingredient_list = document.querySelector(".ingredient-list")
 const add_instruction_list = document.querySelector(".instruction-list")
 
-
-const create_new_li = (ul_container,li_type,li_inp_value)=>{
+//ul_container => to add to container, li_type => name attr, ..value => text, id => ins id for edting(identify)
+const create_new_li = (ul_container,li_type,li_inp_value,id)=>{
     const new_li = document.createElement("li")
+
+    const new_li_hidden_input = document.createElement("input")
+    new_li_hidden_input.name = li_type + "_id" + "[]"
+    new_li_hidden_input.type = "hidden"
 
     const new_li_input = document.createElement("input")
     new_li_input.name = li_type + "[]"
@@ -64,9 +68,12 @@ const create_new_li = (ul_container,li_type,li_inp_value)=>{
 
     if(li_inp_value){
         new_li_input.value = li_inp_value
+        new_li_hidden_input.value = id
+        console.log(new_li_hidden_input.value)
     }
 
     new_li.appendChild(new_li_input)
+    new_li.appendChild(new_li_hidden_input)
     new_li.appendChild(new_li_delete)
 
     ul_container.appendChild(new_li)
@@ -171,12 +178,12 @@ let load_data_to_recipe_form = async(recipe_id)=>{
     preview_recipe_img_db(root_url+"assets/user-uploads/"+result.img_link)
     recipe_form_cook_hour.value = result.cook_hour
     recipe_form_cook_min.value = result.cook_min 
-    result.ingredient_list.forEach((value)=>{
-        create_new_li(add_ingredient_list,"ingredient",value)
+    result.ingredient_list.forEach(li => {
+        create_new_li(add_ingredient_list,"ingredient",li.value,li.id)
         
     })
-    result.instruction_list.forEach((value)=>{
-        create_new_li(add_instruction_list,"instruction",value)
+    result.instruction_list.forEach(li => {
+        create_new_li(add_instruction_list,"instruction",li.value,li.id)
     })
 }
 
