@@ -135,29 +135,37 @@ recipe_list_dashboard.addEventListener("click",async(e)=>{
 // }
 
 
-// //My profile
-// const my_profile_head_info = document.querySelector(".my-profile-head-info")
-// const my_profile_form = document.querySelector(".my-profile-body")
-// const my_profile_head_fullname = document.querySelector("#my-profile-head-fullname")
-// const my_profile_head_email = document.querySelector("#my-profile-head-email")
+//My profile
+const my_profile_head_info = document.querySelector(".my-profile-head-info")
+const my_profile_form = document.querySelector(".my-profile-body")
+const my_profile_head_fullname = document.querySelector("#my-profile-head-fullname")
+const my_profile_head_email = document.querySelector("#my-profile-head-email")
 
-// const my_profile_email = document.querySelector("#my-profile-email")
-// const my_profile_username = document.querySelector("#my-profile-username")
-// const my_profile_fullname = document.querySelector("#my-profile-fullname")
-// const my_profile_password = document.querySelector("#my-profile-password")
-// const my_profile_new_password = document.querySelector("#my-profile-new-password")
-
-
-// const user_list = JSON.parse(localStorage.getItem("user_list"))
-// // let current_user = user_list.find(user=>user.user_name == get_user_login_data.user_name)
+const my_profile_email = document.querySelector("#my-profile-email")
+const my_profile_username = document.querySelector("#my-profile-username")
+const my_profile_fullname = document.querySelector("#my-profile-fullname")
+const my_profile_password = document.querySelector("#my-profile-password")
+const my_profile_new_password = document.querySelector("#my-profile-new-password")
 
 
-// my_profile_head_fullname.textContent = current_user.full_name
-// my_profile_head_email.textContent = current_user.email
+let get_user_data = async()=>{
+    let response = await fetch("api/get_user_data.php",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"}
+    })
+    let result = await response.json()
+    console.log(result.status)
 
-// my_profile_fullname.value = current_user.full_name
-// my_profile_email.value = current_user.email
-// my_profile_username.textContent = current_user.user_name
+    my_profile_head_fullname.textContent = result.fullname
+    my_profile_head_email.textContent = result.email
+
+    my_profile_fullname.value = result.fullname
+    my_profile_email.value = result.email
+    my_profile_username.textContent = result.username
+}
+get_user_data()
+
+
 
 
 // my_profile_form.addEventListener("submit",(e)=>{
