@@ -162,41 +162,42 @@ let get_user_data = async()=>{
     my_profile_fullname.value = result.fullname
     my_profile_email.value = result.email
     my_profile_username.textContent = result.username
+    return result
 }
-get_user_data()
 
+let user_data
+get_user_data().then(result=> user_data = result)
+// setTimeout(()=>console.log(user_data.status),1000)
 
-
+//To check weather user has entered a pass and making the new pass req or not based on that
+my_profile_password.addEventListener("change",()=>{
+    if(my_profile_password.value != ""){
+        my_profile_new_password.required = true
+    }
+    else{
+        my_profile_new_password.required = false
+    }
+})
 
 my_profile_form.addEventListener("submit",async(e)=>{
     e.preventDefault()
     const profile_form_data = new FormData(my_profile_form)
-    const response = await fetch("api/update_user_info.php",{
-        method:"POST",
-        body: profile_form_data
-    })
-    const result = await response.json()
-   
-    // current_user.full_name = my_profile_fullname.value
-    // current_user.email = my_profile_email.value
-    if(my_profile_password.value != ""){
-        set_new_password()
+    if(my_profile_password.value == "" && my_profile_new_password.value == "" || my_profile_password.value == user_data.password){
+        const response = await fetch("api/update_user_info.php",{
+            method:"POST",
+            body: profile_form_data
+        })
+        const result = await response.json()
+        console.log(result.status)
     }
-    
+    if(my_profile_password.value != "" && my_profile_password.value != user_data.password){
+        alert("Please enter correct password")
+    }    
+    if(my_profile_password.value == "" && my_profile_new_password.value != ""){
+        alert("Please enter your current password")
+    }    
   
 })
-
-const set_new_password = ()=>{
-    if(get_user_login_data.password == my_profile_password.value){
-        if(my_profile_new_password.value!=""){
-            current_user.password = my_profile_new_password.value
-        }
-    }
-    else{
-        alert("Password Doesn't Match")
-    }
-
-}
 
 // //profile pic upload
 // const profile_pic_file_input = document.querySelector("#profile-pic-file-input")

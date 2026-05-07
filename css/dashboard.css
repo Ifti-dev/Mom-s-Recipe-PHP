@@ -258,7 +258,6 @@ main::after{
     display: flex;
     flex-direction: column;
     gap: 30px;
-    padding-top: 0;
 }
 .my-profile-head{
     display: flex;
@@ -471,5 +470,8 @@ main::after{
     }
     .my-profile-head-info{
         text-align: center;
+    }
+    .my-profile-wrapper{
+        padding-top: 0;
     }
 }

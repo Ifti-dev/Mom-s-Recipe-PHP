@@ -7,7 +7,14 @@
             $fullname = $_POST['my-profile-fullname'];
             $email = $_POST['my-profile-email'];
             $id = $_SESSION['user_id'];
-            $query = "UPDATE users SET fullname = '$fullname', email = '$email' WHERE id = $id";
+            $password = $_POST['my-profile-password'];
+            $new_password = $_POST['my-profile-new-password'];
+            if(empty($new_password)){
+                $query = "UPDATE users SET fullname = '$fullname', email = '$email' WHERE id = $id";
+            }
+            if(!empty($password) and !empty($new_password)){
+                $query = "UPDATE users SET fullname = '$fullname', email = '$email', password = '$new_password' WHERE id = $id";
+            }
             mysqli_query($conn, $query);
             echo json_encode(["status" => "success"]);
         }
