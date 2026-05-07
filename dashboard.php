@@ -116,11 +116,11 @@
                         <div class="my-profile-input-container">
                             <div class="my-profile-fullname-container my-profile-inp-single-cont">
                                 <label for="my-profile-user-fullname">Full Name:</label>
-                                <input type="text" placeholder="Fullname" id="my-profile-fullname">
+                                <input type="text" placeholder="Fullname" id="my-profile-fullname" name="my-profile-fullname" required>
                             </div>
                             <div class="my-profile-email-container my-profile-inp-single-cont">
                                 <label for="my-profile-user-email">Email:</label>
-                                <input type="email" placeholder="Email" id="my-profile-email">
+                                <input type="email" placeholder="Email" id="my-profile-email" name="my-profile-email" required>
                             </div>
                             <div class="my-profile-username-container my-profile-inp-single-cont">
                                 <label for="my-profile-username">Username:</label>
@@ -128,11 +128,11 @@
                             </div>
                             <div class="my-profile-password-container my-profile-inp-single-cont">
                                 <label for="password">Old Password:</label>
-                                <input type="password" placeholder="xxxx" id="my-profile-password">
+                                <input type="password" placeholder="xxxx" id="my-profile-password" name="my-profile-password">
                             </div>
                             <div class="my-profile-new-password-container my-profile-inp-single-cont">
                                 <label for="password">New Password:</label>
-                                <input type="password" placeholder="xxxx" id="my-profile-new-password">
+                                <input type="password" placeholder="xxxx" id="my-profile-new-password" name="my-profile-new-password">
                             </div>
                         </div>
                         <div class="my-profile-save-button">
