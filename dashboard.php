@@ -102,7 +102,7 @@
                         <div class="my-profile-image">
                             <p id="profile-pic-default"><?php echo strtoupper($_SESSION["username"][0]); ?></p>
                             <img src="assets/icons/user-placeholder.webp" alt="" id="profile-pic">
-                            <label for="profile-pic-file-input" id="profile-pic-file-input-cont"><input type="file" id="profile-pic-file-input">+</label>
+                            <label for="profile-pic-file-input" id="profile-pic-file-input-cont"><input type="file" id="profile-pic-file-input" name="profile-pic-file-input">+</label>
                         </div>
                         <div class="my-profile-head-info">
                             <h3 id="my-profile-head-fullname">Mohammed Iftekhar</h3>

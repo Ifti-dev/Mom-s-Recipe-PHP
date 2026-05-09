@@ -156,6 +156,7 @@ let get_user_data = async()=>{
     let result = await response.json()
     console.log(result.status)
 
+    update_profile_pic(result.img_link)
     my_profile_head_fullname.textContent = result.fullname
     my_profile_head_email.textContent = result.email
 
@@ -199,39 +200,43 @@ my_profile_form.addEventListener("submit",async(e)=>{
   
 })
 
-// //profile pic upload
-// const profile_pic_file_input = document.querySelector("#profile-pic-file-input")
-// const profile_pic = document.querySelector("#profile-pic")
-// const profile_pic_default = document.querySelector("#profile-pic-default")
+//profile pic upload
 
-// profile_pic_file_input.addEventListener("input",()=>{
-//     let img_file = profile_pic_file_input.files[0]
-//     let reader = new FileReader()
-//     reader.readAsDataURL(img_file)
-//     reader.onload = ()=>{
-//         current_user.profile_pic = reader.result
-//         localStorage.setItem("user_list",JSON.stringify(user_list))
-//         update_profile_pic()
-//     }  
-// })
+const profile_pic = document.querySelector("#profile-pic")
+const profile_pic_file_input = document.querySelector("#profile-pic-file-input")
+const profile_pic_default = document.querySelector("#profile-pic-default")
 
-// const update_profile_pic = ()=>{
+profile_pic_file_input.addEventListener("input",async(e)=>{
+    //We use the FormData object as a virtual invisible form.
+    let img_file = new FormData()
+    //PHP doesn't know (or care) if the data came from a real <form> tag or 
+    //a JavaScript FormData object; it just sees the "box" labeled profile-pic-file-input 
+    //inside the $_FILES array.
+    //(element name attr, element.which_file)
+    img_file.append("profile-pic-file-input", profile_pic_file_input.files[0])
+    const response = await fetch("api/update_user_img.php",{
+        method:"POST",
+        body: img_file
+    })
+    const result = await response.json()
+    console.log(result.status)
+    if(result.status == "success")
+        update_profile_pic(result.img_link)
+})
+
+const update_profile_pic = (img_link)=>{
     
-//     if(current_user.profile_pic !=""){
-//         profile_pic.src = current_user.profile_pic
-//         profile_pic.style.display = "block"
-//         profile_pic_default.style.display = "none"
-//         console.log("ooo")    
-//     }
+    if(img_link !=""){
+        profile_pic.src = `http://localhost/Mom-s-Recipe-PHP/assets/user-images/${img_link}`
+        profile_pic.style.display = "block"
+        profile_pic_default.style.display = "none"
+    }
 
-//     else{
-//         profile_pic_default.textContent = current_user.user_name[0]
-//         profile_pic.style.display = "none"
-//         profile_pic_default.style.display = "block"
-//     }
-// }
-// update_profile_pic()
-
+    else{
+        profile_pic.style.display = "none"
+        profile_pic_default.style.display = "block"
+    }
+}
 
 // //dashboard section
 // const user_total_recipe = document.querySelector("#user-total-recipe")

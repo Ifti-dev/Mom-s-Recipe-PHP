@@ -9,7 +9,7 @@
         
         if(mysqli_num_rows($response) != 0){
             $result = mysqli_fetch_assoc($response);
-            echo json_encode(["status" => "success","user_id" => $result["id"], "username" => $result["username"], "fullname" => $result["fullname"],"email" => $result["email"], "password" => $result["password"]]);
+            echo json_encode(["status" => "success","user_id" => $result["id"], "username" => $result["username"], "fullname" => $result["fullname"],"email" => $result["email"], "password" => $result["password"], "img_link" => $result["img_link"]]);
         }
     }
     catch(mysqli_sql_exception $e){
