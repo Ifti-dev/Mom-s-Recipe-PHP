@@ -1,6 +1,9 @@
 <?php 
  include("includes/database.php");
- session_start()
+ session_start();
+ if(empty($_SESSION["user_id"])){
+    header("Location: login.php");
+ }
  ?>
 
 
@@ -174,6 +177,7 @@
             include("partials/footer.php");
             mysqli_close($conn);
         ?>
+        <script src="js/dashboard-recipe_cards.js"></script>
         <script src="js/recipe-form.js"></script>
         <script src="js/dashboard.js"></script>
         

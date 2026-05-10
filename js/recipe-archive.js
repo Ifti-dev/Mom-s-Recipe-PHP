@@ -18,7 +18,8 @@ const recipe_card_container = document.querySelector(".recipe-card-container")
 const recipe_card_list = async()=>{
     let response = await fetch("api/create_archive_recipe_cards.php",{
         method:"POST",
-        headers:{"Content-Type": "application/json"}
+        headers:{"Content-Type": "application/json"},
+        body:JSON.stringify("")
     })
     let result = await response.text()
     recipe_card_container.innerHTML = result

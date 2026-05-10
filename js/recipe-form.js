@@ -145,6 +145,7 @@ recipe_form.addEventListener("submit",async(e)=>{
             console.log(result.status)
             // create_recipe_card_db()
             recipe_form_refresh()
+            create_recipe_card_db()
         }
         
     }

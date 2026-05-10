@@ -1,7 +1,10 @@
 const logout_btn = document.querySelector("#logout")
-logout_btn.addEventListener("click",()=>{
-    localStorage.removeItem("user_login_data")
-    window.location.href = "login.html"
+logout_btn.addEventListener("click",async()=>{
+    let response = await fetch("api/logout.php",{
+    method: "POST",
+    headers: {"Content-Type": "application/json"}
+    })
+    window.location.href = "login.php"
 })
 
 
@@ -30,16 +33,7 @@ cancle_recipe_form.addEventListener("click",()=>{
 
 })
 
-// //Recipe card creation on dashboard 
 
-const recipe_list_dashboard = document.querySelector(".recipe-list-body")
-
-const create_recipe_card_db = async()=>{
-    const response = await fetch("api/create_recipe_cards.php");
-    const result = await response.text()
-    recipe_list_dashboard.innerHTML = result
-}
-create_recipe_card_db()
 // let current_user_recipe_list
 // const check_recipe_list_to_create_card_db = ()=>{
 //     recipe_list_dashboard.innerHTML = ``
