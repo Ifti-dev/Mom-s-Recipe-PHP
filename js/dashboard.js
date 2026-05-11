@@ -68,25 +68,6 @@ let get_recipe_data = null
 
 recipe_list_dashboard.addEventListener("click",async(e)=>{
     let recipe_id = e.target.closest(".recipe-dashboard-card").dataset.unique_id
-    // let find_recipe_db_element = recipe_list[find_recipe_db]
-
-    // const response = await fetch("api/get_recipe_data.php",{
-    //     method: 'POST',
-    //     headers: {'Content-Type': 'application/json'},
-    //     body:JSON.stringify(recipe_id)
-    // })
-    // const result = await response.json()
-    // get_recipe_data = {
-    //             title : result.title,
-    //             desc : result.description,
-    //             img : result.img_link,
-    //             cook_hour : result.cook_hour,
-    //             cook_min : result.cook_min,
-    //             total_serving : result.total_serving,
-    //             ingredient_list : result.ingredient_list,
-    //             instruction_list : result.instruction_list,
-    //             recipe_id: recipe_id
-    // }
 
     if(e.target.className == "recipe-dashboard-card-edit-btn"){
         // To make form visible
@@ -95,14 +76,17 @@ recipe_list_dashboard.addEventListener("click",async(e)=>{
         console.log(recipe_id)
         load_data_to_recipe_form(recipe_id)
     }
-    // if(e.target.className == "recipe-dashboard-card-del-btn"){
-    //     // console.log(e.target.closest(".recipe-dashboard-card").dataset.unique_id)
-        
-    //     recipe_list.splice(find_recipe_db,1)
-    //     localStorage.setItem("recipe_list",JSON.stringify(recipe_list))
-
-    //     e.target.closest(".recipe-dashboard-card").remove()
-    // }
+    if(e.target.className == "recipe-dashboard-card-del-btn"){
+        let response = await fetch("api/delete_recipe_cards.php",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(recipe_id)
+        })
+        let result = await response.json()
+        console.log(result.status)
+        if(result.status == "success")
+            create_recipe_card_db()
+    }
 })
 // // title,desc,img,cook_hour,cook_min,ingredient_list_data,instruction_list_data,recipe_id,unique_id
 // const edit_recipe_card_db = (element)=>{
