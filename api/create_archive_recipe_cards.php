@@ -21,7 +21,7 @@
             <img src="<?php echo ROOT_URL . 'assets/user-uploads/' . $row['img_link'];?>" alt="">
         </div>
         <div class="recipe-card-body">
-            <h3><a href="recipe-page.html?slug=<?php echo $row["slug"]; ?>"><?php echo $row["title"]; ?></a></h3>
+            <h3><a href="recipe-page.php?slug=<?php echo $row["slug"]; ?>"><?php echo $row["title"]; ?></a></h3>
             <div class="recipe-card-user">
                 <div class="recipe-card-user-img-cont">
                     <?php if(empty($row_creator["img_link"])){ ?>
