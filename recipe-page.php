@@ -28,6 +28,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/single-recipe.css">
     <script src="https://kit.fontawesome.com/bbf8f18e93.js" crossorigin="anonymous"></script>
+    <script>
+        const logged_in_user = <?php echo json_encode(!empty($_SESSION['user_id'])? $_SESSION['user_id']: false); ?>;
+        const recipe_id = <?php echo json_encode(($recipe['id'])); ?>;
+    </script>
     <title>Document</title>
 </head>
 <body>
@@ -91,8 +95,8 @@
                 <div class="comment-sec-wrapper">
                     <h2>Comments:</h2>
                     <hr>
-                    <form id="comment-form" class="comment-form">
-                        <label for="comment-input-box-cont" class="comment-input-box-cont"><textarea name="comment-input-box" id="comment-input-box" placeholder="Add a comment"></textarea></label>
+                    <form id="comment-form" class="comment-form" method="post">
+                        <label for="comment-input-box-cont" class="comment-input-box-cont"><textarea name="comment-input-box" id="comment-input-box" name="comment-reply-input" placeholder="Add a comment"></textarea></label>
                         <div class="comment-form-btn-container">
                             <input type="reset" value="Cancle">
                             <input type="submit" value="Comment">
