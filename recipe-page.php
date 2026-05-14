@@ -10,10 +10,8 @@
     $query_ingredient = "SELECT * FROM ingredient_list WHERE recipe_id = '$recipe[id]'";
     $response_ingredient = mysqli_query($conn, $query_ingredient);
     
-
     $query_instruction = "SELECT * FROM instruction_list WHERE recipe_id = '$recipe[id]'";
     $response_instruction = mysqli_query($conn, $query_instruction);
-    
     
     
     $query_creator = "SELECT * FROM users WHERE id = $recipe[user_id]";
@@ -106,6 +104,7 @@
                     
                     <div id="comment-container">
                        <!-- comments are added here -->
+                        
                     </div>
                 </div>
 

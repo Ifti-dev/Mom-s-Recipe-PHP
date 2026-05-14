@@ -226,7 +226,7 @@ comment_section.addEventListener("submit",async(e)=>{
     const result = await response.json()
     if(result.status == "success")
         console.log("success")
-    // render_comments()
+    create_comment_reply()
 })
 
 //cancel comment
@@ -451,3 +451,19 @@ comment_input_box.addEventListener("input",()=>{
     comment_input_box.style.height = comment_input_box.scrollHeight + "px";
 })
 console.log(body.scrollHeight)
+
+
+//Comment creator
+
+const recipe_list_dashboard = document.querySelector(".recipe-list-body")
+
+const create_comment_reply = async()=>{
+    const response = await fetch("api/create_comment_reply.php",{
+        method:"POST",
+        headers:{"Content-Type": "application/json"},
+        body: JSON.stringify(recipe_id)
+    });
+    const result = await response.text()
+    comment_container.innerHTML = result
+}
+create_comment_reply()
