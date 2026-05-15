@@ -16,7 +16,8 @@
                 $query = "INSERT INTO comment_reply(recipe_id,user_id,parent_comment_id,comment) VALUES('$recipe_id','$user_id','$parent_comment_id','$comment')";
             
             mysqli_query($conn, $query);
-            echo json_encode(["status" => "success", "p_id"=> "$parent_comment_id"]);
+            $id = mysqli_insert_id($conn);
+            echo json_encode(["status" => "success", "id"=> "$id"]);
         }
 
     }

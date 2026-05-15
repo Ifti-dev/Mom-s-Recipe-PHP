@@ -199,14 +199,17 @@ comment_section.addEventListener("submit",async(e)=>{
     let curr_comment =  e.target.closest(".comment")
     //crrent reply form to=> collect data
     let curr_form = e.target.closest(".reply-form")
+    
     let parent_id = null
     let comment = null
 
+    //for reply
     if(curr_comment){
         parent_id = curr_comment.dataset.id
         comment = curr_form.querySelector(".reply-input-box").value
         comment_container.querySelectorAll(".reply-form").forEach(form=>form.remove()) //removing all reply inut box from the container after submition
     }
+    //for comment
     else{
         parent_id = null
         comment = document.querySelector("#comment-input-box").value
@@ -224,9 +227,23 @@ comment_section.addEventListener("submit",async(e)=>{
         body: JSON.stringify(send_data)
     })
     const result = await response.json()
-    if(result.status == "success")
+
+    if(result.status == "success"){
         console.log("success")
-    create_comment_reply()
+        //for comment 
+        if(!curr_comment){
+            create_comment_reply("new","comment",document.querySelector("#comment-input-box").value, result.id).then(text=> comment_container.innerHTML += text)
+            document.querySelector("#comment-input-box").value = ""
+        }
+        //for reply
+        else if(curr_comment){
+            let comment_reply_container = curr_comment.querySelector(".comment-reply-container")
+            create_comment_reply("new","reply",curr_form.querySelector(".reply-input-box").value, result.id).then(text=> comment_reply_container.innerHTML += text)
+            curr_form.querySelector(".reply-input-box").value = ""
+        }
+    }
+    
+    
 })
 
 //cancel comment
@@ -457,13 +474,25 @@ console.log(body.scrollHeight)
 
 const recipe_list_dashboard = document.querySelector(".recipe-list-body")
 
-const create_comment_reply = async()=>{
+const create_comment_reply = async(status,type,value,id)=>{
+    let fetch_signal_data = {
+        recipe_id: recipe_id,
+        type: type,
+        text: value,
+        id:id,
+        status: status
+    }
     const response = await fetch("api/create_comment_reply.php",{
         method:"POST",
         headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(recipe_id)
+        body: JSON.stringify(fetch_signal_data)
     });
     const result = await response.text()
-    comment_container.innerHTML = result
+    if(status == "old")
+        comment_container.innerHTML = result
+    else if(status == "new"){
+        console.log(result)
+        return result
+    }
 }
-create_comment_reply()
+create_comment_reply("old", "any")
